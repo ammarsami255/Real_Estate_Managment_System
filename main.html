@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>العقارات المتاحة</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles_main.css">
+</head>
+
+<body>
+  <header>
+    <h1>العقارات المتاحة</h1>
+  </header>
+
+  <div class="container">
+    <aside id="sidebar">
+      <h3>المناطق</h3>
+      <a href="#1">الحي الاول</a>
+      <a href="#2">الحي التاني</a>
+      <a href="#3">الحي التالت</a>
+      <a href="#4">الحي الرابع</a>
+      <a href="#5">الحي الخامس</a>
+      <a href="#6">الحي السادس</a>
+      <a href="#7">الحي السابع</a>
+      <a href="#8">الحي التامن</a>
+      <a href="#9">الحي التاسع</a>
+      ---------------
+      <a href="#darMasr">دار مصر</a>
+      <a href="#ganna">جنة مصر</a>
+      <a href="#sakan">سكن مصر</a>
+      <a href="#rese">ريزيدانس</a>
+      ---------------
+      <a href="#m1">المنطقه الاوله</a>
+      <a href="#m2">المنطقه التانيه</a>
+      <a href="#m3">المنطقه التالته</a>
+      <a href="#m4">المنطقه الرابعه</a>
+      <a href="#m5">المنطقه الخامسه</a>
+      <a href="#m6">المنطقه السادسه</a>
+      <a href="#m7">المنطقه السابعه</a>
+      <a href="#m8">المنطقه التامنه</a>
+      <a href="#m9">المنطقه التاسعه</a>
+      ---------------
+      <a href="#m100">100 متر</a>
+      <a href="#m70">70 متر</a>
+      <a href="#m60">60 متر</a>
+      <a href="#super">السوبر القديم</a>
+      <a href="#gehaz">الجهاز</a>
+      <a href="#motamiz">المتميز</a>
+      ---------------
+      <a href="#tawen">تعاونيات</a>
+      <a href="#etihad">اتحاد تعاوني</a>
+      <a href="#family">العائلي</a>
+    </aside>
+
+    <main id="main-content">
+
+    </main>
+  </div>
+  <script>
+    fetch("listings.json")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("ملف JSON مش لاقيه");
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log("تم تحميل البيانات:", data);
+      })
+      .catch(error => {
+        console.error("فيه مشكلة في تحميل الملف:", error);
+      });
+    </script>
+    
+  <script>
+    
+    async function loadListings() {
+      const response = await fetch('listings.json');
+      const data = await response.json();
+      const container = document.getElementById('main-content');
+
+      data.forEach(section => {
+        const sec = document.createElement('section');
+        sec.id = section.section;
+        sec.innerHTML = `<h2>${section.area}</h2>`;
+
+        section.listings.forEach(listing => {
+          const card = document.createElement('div');
+          card.className = 'card';
+
+          const phonesHTML = listing.phones.map(p => `
+            <div class="contact">📞 ${p.name} - ${p.number}</div>
+          `).join("");
+          const message = `السلام عليكم، انا مهتم بالإعلان التالي:\n${listing.address}\n${listing.details}\n${listing.code}`;
+          card.innerHTML = `
+            <div class="address">${listing.address}</div>
+            <div class="details">${listing.details}</div>
+            <div class="code">الكود : ${listing.code}</div>
+            ${phonesHTML}
+            <a href="https://wa.me/${listing.phones[0].number}?text=${encodeURIComponent(message)}" target="_blank" class="whatsapp-btn">
+              التواصل عبر واتساب مع ${listing.phones[0].name}
+            </a>
+          `;
+
+          sec.appendChild(card);
+        });
+
+        container.appendChild(sec);
+      });
+    }
+
+
+    loadListings();
+  </script>
+</body>
+
+</html>

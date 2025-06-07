@@ -1,0 +1,27 @@
+<!-- واجهة HTML -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>نموذج الإدخال</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="font-family: Arial; text-align: center; direction: rtl; margin-top: 50px;">
+
+    <h2>أدخل بياناتك</h2>
+
+    <form method="POST" action="index.php" style="max-width: 400px; margin: auto;">
+        <label>العنوان:</label><br>
+        <input type="text" name="title" required style="width: 100%; padding: 10px; margin: 10px 0;"><br>
+
+        <label>التفاصيل:</label><br>
+        <textarea name="details" required style="width: 100%; padding: 10px; margin: 10px 0;"></textarea><br>
+
+        <label>رقم الهاتف:</label><br>
+        <input type="text" name="phone" required pattern="[0-9]{10,15}" title="يجب إدخال رقم هاتف صحيح من 10 إلى 15 رقم" style="width: 100%; padding: 10px; margin: 10px 0;"><br>
+
+        <button type="submit" style="padding: 10px 20px;">إرسال</button>
+    </form>
+
+</body>
+</html>
